@@ -160,6 +160,11 @@ $(function() {
     window.restaurant = json;
     drawPage(json);
     makeOrder(json);
+    $('#hidden').html(`
+      <input type="hidden" name="Restaurant uid" value="${json.uid}"></input>
+      <input type="hidden" name="Restaurant name" value="${json.name}"></input>
+      <input type="hidden" name="Restaurant email" value="${json.email}"></input>
+    `)
   });
 
   $('body').on('click', '.btn-dish', function() {
@@ -186,6 +191,10 @@ $(function() {
     order[uid] = { name: name, quantity: quantity + 1, price };
     setOrder(order);
     makeOrder(window.restaurant);
+  });
+
+  $('#submit').on('click', () => {
+    window.localStorage.removeItem('current-order-' + window.restaurant.uid);
   });
 
 });
