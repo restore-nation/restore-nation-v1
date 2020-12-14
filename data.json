@@ -1,0 +1,65 @@
+{
+  "name": "Chez Bobby",
+  "description": "un petit resto qu'il est bien sympa",
+  "phone": "0606060606",
+  "email": "chez.bobby@gmail.com",
+  "website": "https://chezbobby.restore-nation.site",
+  "address": "1 rue de la dalle 86000 Poitiers",
+  "location": { "lat": 46.5802545686478, "lng": 0.3408495398778302 },
+  "photos": [
+    "https://cac.img.pmdstatic.net/fit/http.3A.2F.2Fprd2-bone-image.2Es3-website-eu-west-1.2Eamazonaws.2Ecom.2Fcac.2F2018.2F09.2F25.2F03ab5e89-bad7-4a44-b952-b30c68934215.2Ejpeg/748x372/quality/90/crop-from/center/burger-maison.jpeg",
+    "http://images.sweetauthoring.com/recipe/11963_2079.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG"
+  ],
+  "hours": {
+    "tuesday": [{ "from": "12h00", "to": "15h00" }, { "from": "19h00", "to": "23h00" }],
+    "wednesday": [{ "from": "12h00", "to": "15h00" }],
+    "thursday": [{ "from": "12h00", "to": "15h00" }, { "from": "19h00", "to": "23h00" }],
+    "friday": [{ "from": "12h00", "to": "15h00" }, { "from": "19h00", "to": "23h00" }],
+    "saturday": [{ "from": "12h00", "to": "15h00" }, { "from": "19h00", "to": "23h00" }],
+    "sunday": [{ "from": "12h00", "to": "15h00" }]
+  },
+  "menus": [
+    {
+      "name": "menu du midi",
+      "description": "un petit menu qu'il est sympa",
+      "price": 14.99,
+      "hours": [{ "from": "12h00", "to": "15h00" }],
+      "main": [{"ref":"1"}],
+      "dessert": [{"ref":"2"}],
+      "other": [{"ref":"3"}]
+    }
+  ],
+  "carte": [
+    {
+      "id": "1",
+      "name": "Le super burger",
+      "description": "un burger qu'il est bien sympa. Buns moelleux sesame, 2 steaks 150gr, Bacon, Sauce du chef. Servi avec un bol de frites",
+      "price": 12.99,
+      "photos": ["https://cac.img.pmdstatic.net/fit/http.3A.2F.2Fprd2-bone-image.2Es3-website-eu-west-1.2Eamazonaws.2Ecom.2Fcac.2F2018.2F09.2F25.2F03ab5e89-bad7-4a44-b952-b30c68934215.2Ejpeg/748x372/quality/90/crop-from/center/burger-maison.jpeg"],
+      "vegan": false,
+      "homemade": true,
+      "category": "main"
+    },
+    {
+      "id": "2",
+      "name": "Cheesecake agrumes",
+      "description": "un petit cheesecake aux zestes de citron. Servi avec un coulis de fruits rouge",
+      "price": 9.99,
+      "photos": ["http://images.sweetauthoring.com/recipe/11963_2079.jpg"],
+      "vegan": false,
+      "homemade": true,
+      "category": "dessert"
+    },
+    {
+      "id": "3",
+      "name": "Café",
+      "description": "un petit café qu'il est bien sympa",
+      "price": 3.99,
+      "photos": ["https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG"],
+      "vegan": false,
+      "homemade": true,
+      "category": "other"
+    }
+  ]
+}
