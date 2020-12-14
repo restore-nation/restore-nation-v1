@@ -21,6 +21,7 @@
   },
   "menus": [
     {
+      "uid": "menu_1",
       "name": "menu du midi",
       "description": "un petit menu qu'il est sympa",
       "price": 14.99,
@@ -32,7 +33,7 @@
   ],
   "carte": [
     {
-      "id": "1",
+      "uid": "dish_1",
       "name": "Le super burger",
       "description": "un burger qu'il est bien sympa. Buns moelleux sesame, 2 steaks 150gr, Bacon, Sauce du chef. Servi avec un bol de frites",
       "price": 12.99,
@@ -42,7 +43,7 @@
       "category": "main"
     },
     {
-      "id": "2",
+      "uid": "dish_2",
       "name": "Cheesecake agrumes",
       "description": "un petit cheesecake aux zestes de citron. Servi avec un coulis de fruits rouge",
       "price": 9.99,
@@ -52,7 +53,7 @@
       "category": "dessert"
     },
     {
-      "id": "3",
+      "uid": "dish_3",
       "name": "Café",
       "description": "un petit café qu'il est bien sympa",
       "price": 3.99,

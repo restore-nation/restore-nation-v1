@@ -21,18 +21,19 @@
   },
   "menus": [
     {
+      "uid": "menu_1",
       "name": "menu du midi",
       "description": "un petit menu qu'il est cool",
       "price": 14.99,
       "hours": [{ "from": "12h00", "to": "15h00" }],
-      "main": [{"ref":"1"}],
-      "dessert": [{"ref":"2"}],
-      "other": [{"ref":"3"}]
+      "main": [{"ref":"dish_1"}],
+      "dessert": [{"ref":"dish_2"}],
+      "other": [{"ref":"dish_3"}]
     }
   ],
   "carte": [
     {
-      "id": "1",
+      "uid": "dish_1",
       "name": "Le super burger",
       "description": "un burger qu'il est bien cool. Buns moelleux sesame, 2 steaks 150gr, Bacon, Sauce du chef. Servi avec un bol de frites",
       "price": 12.99,
@@ -42,7 +43,7 @@
       "category": "main"
     },
     {
-      "id": "2",
+      "uid": "dish_2",
       "name": "Cheesecake agrumes",
       "description": "un petit cheesecake aux zestes de citron. Servi avec un coulis de fruits rouge",
       "price": 9.99,
@@ -52,7 +53,7 @@
       "category": "dessert"
     },
     {
-      "id": "3",
+      "uid": "dish_3",
       "name": "Café",
       "description": "un petit café qu'il est bien cool",
       "price": 3.99,

@@ -49,10 +49,10 @@ $(function() {
 
 
       let desc = "";
-      const starters = (menu.starters || []).map(e => _.find(resto.carte,  d => d.id === e.ref))
-      const mains = (menu.main || []).map(e => _.find(resto.carte, d => d.id === e.ref))
-      const desserts = (menu.dessert || []).map(e => _.find(resto.carte,  d => d.id === e.ref))
-      const others = (menu.other || []).map(e => _.find(resto.carte,  d => d.id === e.ref))
+      const starters = (menu.starters || []).map(e => _.find(resto.carte,  d => d.uid === e.ref))
+      const mains = (menu.main || []).map(e => _.find(resto.carte, d => d.uid === e.ref))
+      const desserts = (menu.dessert || []).map(e => _.find(resto.carte,  d => d.uid === e.ref))
+      const others = (menu.other || []).map(e => _.find(resto.carte,  d => d.uid === e.ref))
 
       function addSection(arr, name) {
         if (arr.length > 0) {
@@ -76,10 +76,11 @@ $(function() {
             <p class="card-text">${desc}</p>
             <div class="d-flex justify-content-between align-items-center">
               <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">Commander</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary btn-menu" data-menu-id="${menu.uid}">Commander</button>
               </div>
             </div>
             <small class="text-muted">${menu.price} €</small>
+            <input type="number" name="${menu.name}" id="menu_${menu.uid}_quantity" value="0"></input>
           </div>
         </div></div>`
     }).join('\n');
@@ -98,10 +99,11 @@ $(function() {
             <p class="card-text" style="min-height: 150px">${dish.description}</p>
             <div class="d-flex justify-content-between align-items-center">
               <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">Commander</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary btn-dish" data-dish-id="${dish.uid}">Commander</button>
               </div>
             </div>
             <small class="text-muted">${dish.price} €</small>
+            <input type="number" name="${dish.name}" id="dish_${dish.uid}_quantity" value="0"></input>
           </div>
         </div></div>`
     }).join('\n');
@@ -121,7 +123,24 @@ $(function() {
     makeCarte(resto)
   }
 
+  window.restaurant = null;
   fetch('./data.json').then(r => r.json()).then(json => {
+    window.restaurant = json;
     drawPage(json);
+  });
+
+  $('body').on('click', '.btn-dish', function() {
+    const uid = $(this).data('dish-id');
+    const selector = '[id=dish_' + uid + '_quantity]';
+    const quantity = parseInt($(selector).val() || '0', 10);
+    console.log(uid, quantity)
+    $(selector).val(quantity + 1)
+  });
+
+  $('body').on('click', '.btn-menu', function() {
+    const uid = $(this).data('menu-id');
+    const selector = '[id=menu_' + uid + '_quantity]'
+    const quantity = parseInt($(selector).val() || '0', 10);
+    $(selector).val(quantity + 1)
   });
 });
