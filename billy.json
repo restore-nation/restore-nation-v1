@@ -3,7 +3,7 @@
   "name": "Chez Billy",
   "description": "un petit resto qu'il est bien cool",
   "phone": "0606060606",
-  "email": "chez.billy@gmail.com",
+  "email": "chez.billy@restore-nation.site",
   "website": "https://chezbilly.restore-nation.site",
   "address": "2 rue de la dalle 86000 Poitiers",
   "location": { "lat": 46.5802545686478, "lng": 0.3408495398778302 },
