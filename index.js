@@ -10,6 +10,14 @@ $(function() {
     sunday: 'Dimanche',
   }
 
+  function getOrder() {
+    return JSON.parse(window.localStorage.getItem("current-order-" + window.restaurant.uid) || '{}')
+  }
+
+  function setOrder(order) {
+    window.localStorage.setItem('current-order-' + window.restaurant.uid, JSON.stringify(order));
+  }
+
   function makeMap(resto) {
     if (resto.location) {
       let map = L.map('resto-map').setView([resto.location.lat, resto.location.lng], 13);
@@ -47,6 +55,7 @@ $(function() {
   function makeMenus(resto) {
     const content = resto.menus.map(menu => {
 
+      const order = getOrder();
 
       let desc = "";
       const starters = (menu.starters || []).map(e => _.find(resto.carte,  d => d.uid === e.ref))
@@ -74,13 +83,12 @@ $(function() {
           
           <div class="card-body">
             <p class="card-text">${desc}</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary btn-menu" data-menu-id="${menu.uid}">Commander</button>
-              </div>
+            <div class="d-flex justify-content-between align-items-center flex-row ">
+              <button type="button" class="btn btn-sm btn-outline-secondary btn-menu" data-menu-name="${menu.name}" data-menu-id="${menu.uid}" data-menu-price="${menu.price}" >Commander</button>
+              <small class="text-muted">${menu.price} €</small>
+              <input type="number" name="${menu.name}" id="menu_${menu.uid}_quantity" value="${(order[menu.uid] || { quantity: 0}).quantity}" style="width: 50px"></input>
             </div>
-            <small class="text-muted">${menu.price} €</small>
-            <input type="number" name="${menu.name}" id="menu_${menu.uid}_quantity" value="0"></input>
+            
           </div>
         </div></div>`
     }).join('\n');
@@ -88,6 +96,7 @@ $(function() {
   }
 
   function makeCarte(resto) {
+    const order = getOrder();
     const content = resto.carte.map(dish => {
       return `<div class="col-md-4">
         <div class="card mb-4 shadow-sm">
@@ -97,17 +106,40 @@ $(function() {
           <div class="card-body">
             <p class="card-text">${dish.name}</p>
             <p class="card-text" style="min-height: 150px">${dish.description}</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary btn-dish" data-dish-id="${dish.uid}">Commander</button>
-              </div>
+            <div class="d-flex justify-content-between align-items-center flex-row ">
+              <button type="button" class="btn btn-sm btn-outline-secondary btn-dish" data-dish-name="${dish.name}" data-dish-id="${dish.uid}" data-dish-price="${dish.price}">Commander</button>
+              <small class="text-muted">${dish.price} €</small>
+              <input type="number" name="${dish.name}" id="dish_${dish.uid}_quantity" value="${(order[dish.uid] || { quantity: 0}).quantity}" style="width: 50px"></input>
             </div>
-            <small class="text-muted">${dish.price} €</small>
-            <input type="number" name="${dish.name}" id="dish_${dish.uid}_quantity" value="0"></input>
           </div>
         </div></div>`
     }).join('\n');
     $('.resto-carte').html(content)
+  }
+
+  function makeOrder(resto) {
+    const order = getOrder();
+    const keys = Object.keys(order);
+    const total = keys.map(k => order[k].price * order[k].quantity).reduce((a, b) => a + b, 0);
+    const quantity = keys.map(k => order[k].quantity).reduce((a, b) => a + b, 0);
+    const content = `<ul class="list-group mb-3">
+      ${keys.map(k => order[k]).map(product => {
+        return `<li class="list-group-item d-flex justify-content-between lh-condensed">
+          <div>
+            <h6 class="my-0">${product.name}</h6>
+            <small class="text-muted">${product.quantity} x ${product.price} €</small>
+          </div>
+          <span class="text-muted">${product.price * product.quantity} €</span>
+        </li>`;
+      }).join('\n')}
+      <li class="list-group-item d-flex justify-content-between">
+        <span>Total</span>
+        <strong>${total} €</strong>
+      </li>
+    </ul>`;
+    $('#order').html(content);
+    $('#order-count').html(quantity);
+    $('#order-button').html('Commander <span class="badge badge-secondary badge-pill">' + quantity + '</span>');
   }
 
   function drawPage(resto) {
@@ -127,20 +159,33 @@ $(function() {
   fetch('./data.json').then(r => r.json()).then(json => {
     window.restaurant = json;
     drawPage(json);
+    makeOrder(json);
   });
 
   $('body').on('click', '.btn-dish', function() {
     const uid = $(this).data('dish-id');
+    const name = $(this).data('dish-name');
+    const price = $(this).data('dish-price');
     const selector = '[id=dish_' + uid + '_quantity]';
     const quantity = parseInt($(selector).val() || '0', 10);
-    console.log(uid, quantity)
-    $(selector).val(quantity + 1)
+    $(selector).val(quantity + 1);
+    const order = getOrder();
+    order[uid] = { name: name, quantity: quantity + 1, price };
+    setOrder(order);
+    makeOrder(window.restaurant);
   });
 
   $('body').on('click', '.btn-menu', function() {
     const uid = $(this).data('menu-id');
+    const name = $(this).data('menu-name');
+    const price = $(this).data('menu-price');
     const selector = '[id=menu_' + uid + '_quantity]'
     const quantity = parseInt($(selector).val() || '0', 10);
     $(selector).val(quantity + 1)
+    const order = getOrder()
+    order[uid] = { name: name, quantity: quantity + 1, price };
+    setOrder(order);
+    makeOrder(window.restaurant);
   });
+
 });
