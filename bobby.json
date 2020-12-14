@@ -26,9 +26,9 @@
       "description": "un petit menu qu'il est sympa",
       "price": 14.99,
       "hours": [{ "from": "12h00", "to": "15h00" }],
-      "main": [{"ref":"1"}],
-      "dessert": [{"ref":"2"}],
-      "other": [{"ref":"3"}]
+      "main": [{"ref":"dish_1"}],
+      "dessert": [{"ref":"dish_2"}],
+      "other": [{"ref":"dish_3"}]
     }
   ],
   "carte": [
