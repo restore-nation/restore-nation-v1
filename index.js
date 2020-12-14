@@ -121,7 +121,7 @@ $(function() {
     makeCarte(resto)
   }
 
-  fetch('./bobby.json').then(r => r.json()).then(json => {
+  fetch('./data.json').then(r => r.json()).then(json => {
     drawPage(json);
   });
 });
